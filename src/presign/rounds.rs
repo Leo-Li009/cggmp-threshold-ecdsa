@@ -130,6 +130,7 @@ impl Round0 {
 					ek: self.secrets.ek.clone(),
 				};
 				output.push(Msg {
+					round: 1,
 					sender: self.ssid.X.i,
 					receiver: Some(*j),
 					body: Box::new(body),
@@ -412,6 +413,7 @@ impl Round1 {
 					statement_psi_prime_j_i,
 				};
 				output.push(Msg {
+					round: 1,
 					sender: self.ssid.X.i,
 					receiver: Some(*j),
 					body: Box::new(body),
@@ -667,6 +669,7 @@ impl Round2 {
 					statement_psi_prime_prime_j_i,
 				};
 				output.push(Msg {
+					round: 1,
 					sender: self.ssid.X.i,
 					receiver: Some(*j),
 					body: Box::new(body),
@@ -865,7 +868,7 @@ impl Round3 {
 				N_hats: self.N_hats,
 			};
 
-			output.push(Msg { sender: self.ssid.X.i, receiver: None, body: Box::new(None) });
+			output.push(Msg {round: 1, sender: self.ssid.X.i, receiver: None, body: Box::new(None) });
 
 			Ok(Round4 {
 				ssid: self.ssid,
@@ -1019,7 +1022,7 @@ impl Round3 {
 				proof_delta_i,
 			});
 
-			output.push(Msg { sender: self.ssid.X.i, receiver: None, body: Box::new(body) });
+			output.push(Msg {round: 1, sender: self.ssid.X.i, receiver: None, body: Box::new(body) });
 			Ok(Round4 { ssid: self.ssid, output: None, transcript: None })
 		}
 	}

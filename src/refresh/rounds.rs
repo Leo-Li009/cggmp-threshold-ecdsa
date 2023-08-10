@@ -35,7 +35,7 @@ impl Round0 {
 	{
 		match self.local_key_option {
 			Some(local_key) => {
-				output.push(Msg { sender: local_key.i, receiver: None, body: None });
+				output.push(Msg {round: 1, sender: local_key.i, receiver: None, body: None });
 				match self.new_party_index_option {
 					None => Ok(Round1 {
 						party_type: PartyType::Existing(Box::new(local_key)),
@@ -52,6 +52,7 @@ impl Round0 {
 					Some(new_party_index) => {
 						join_message.set_party_index(new_party_index);
 						output.push(Msg {
+							round: 1,
 							sender: join_message.clone().get_party_index()?,
 							receiver: None,
 							body: Some(join_message.clone()),
@@ -122,6 +123,7 @@ impl Round1 {
 				let refresh_message = refresh_message_result.unwrap();
 				let new_paillier_dk = refresh_message.clone().1;
 				output.push(Msg {
+					round: 1,
 					sender: old_i,
 					receiver: None,
 					body: Some(refresh_message.clone().0),
@@ -140,6 +142,7 @@ impl Round1 {
 				let (join_message, paillier_keys, new_party_index) = *boxed_new;
 				// New parties don't need to form a refresh message.
 				output.push(Msg {
+					round: 1,
 					sender: join_message.get_party_index()?,
 					receiver: None,
 					body: None,

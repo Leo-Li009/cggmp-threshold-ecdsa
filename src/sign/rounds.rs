@@ -81,7 +81,7 @@ impl Round0 {
 				i: self.ssid.X.i,
 				sigma_i: sigma_i.clone(),
 			};
-			output.push(Msg { sender: self.ssid.X.i, receiver: None, body: Box::new(body) });
+			output.push(Msg {round: 1, sender: self.ssid.X.i, receiver: None, body: Box::new(body) });
 			// Erase output from memory
 			presigning_output.zeroize();
 			Ok(Round1 {
@@ -149,7 +149,7 @@ impl Round1 {
 		if self.r == x_projection {
 			let signing_output =
 				SigningOutput { ssid: self.ssid.clone(), m: self.m, r: self.r, sigma };
-			output.push(Msg { sender: self.ssid.X.i, receiver: None, body: Box::new(None) });
+			output.push(Msg {round: 1, sender: self.ssid.X.i, receiver: None, body: Box::new(None) });
 			Ok(Round2 { ssid: self.ssid, output: Some(signing_output) })
 		} else {
 			// (l,j) to proof for D_j_i
@@ -406,7 +406,7 @@ impl Round1 {
 				proof_sigma_i,
 				statement_sigma_i,
 			});
-			output.push(Msg { sender: self.ssid.X.i, receiver: None, body: Box::new(body) });
+			output.push(Msg {round: 1, sender: self.ssid.X.i, receiver: None, body: Box::new(body) });
 			Ok(Round2 { ssid: self.ssid, output: None })
 		}
 	}

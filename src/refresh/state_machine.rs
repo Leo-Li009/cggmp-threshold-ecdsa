@@ -172,7 +172,7 @@ impl StateMachine for KeyRefresh {
 					.as_mut()
 					.ok_or(Error::ReceivedOutOfOrderMessage { current_round, msg_round: 1 })?;
 				store
-					.push_msg(Msg { sender: msg.sender, receiver: msg.receiver, body: m })
+					.push_msg(Msg {round: 1, sender: msg.sender, receiver: msg.receiver, body: m })
 					.map_err(Error::HandleMessage)?;
 				self.proceed_round(false)
 			},
@@ -182,7 +182,7 @@ impl StateMachine for KeyRefresh {
 					.as_mut()
 					.ok_or(Error::ReceivedOutOfOrderMessage { current_round, msg_round: 2 })?;
 				store
-					.push_msg(Msg { sender: msg.sender, receiver: msg.receiver, body: m })
+					.push_msg(Msg {round: 1, sender: msg.sender, receiver: msg.receiver, body: m })
 					.map_err(Error::HandleMessage)?;
 				self.proceed_round(false)
 			},
